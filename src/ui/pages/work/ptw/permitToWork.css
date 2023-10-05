@@ -1,0 +1,10 @@
+.container {
+    overflow-x: auto;
+    margin-right: auto;
+    margin-left: auto;
+  }
+  
+  th {
+    padding: 0 !important;
+    text-align: center !important;
+  }

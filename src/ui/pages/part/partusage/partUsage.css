@@ -1,0 +1,15 @@
+.container {
+    overflow-x: auto;
+    margin-right: auto;
+    margin-left: auto;
+  }
+  
+  th {
+    padding: 0 !important;
+    text-align: center !important;
+  }
+  input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
+}

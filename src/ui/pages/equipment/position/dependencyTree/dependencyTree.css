@@ -1,0 +1,25 @@
+.node__root > circle {
+    fill: red;
+  }
+  
+  .node__branch > circle {
+    fill: yellow;
+  }
+  
+  .node__leaf > circle {
+    fill: green;
+    /* Let's also make the radius of leaf nodes larger */
+    r: 15;
+  }
+
+.data-values{
+  width: 100%;
+  background-color: rgba(243, 241, 241, 0.76);
+}
+
+g li{
+  list-style: none;
+  text-align: left;
+  padding: 0 0 5px 5px;
+  display: hidden;
+}

@@ -1,0 +1,95 @@
+{   "stores":[
+    "Store1", "Store2","Store3","Store4","Store5"
+],
+
+    "orders":[
+        {
+        "id":1,
+        "number":"001",
+        "description": "",
+        "equipmentCode":"E001",
+        "equipmentOrganization": "ESS",
+        "departmentCode": "*",
+        "typeCode": "",
+        "statusCode": "UFIN"
+    },
+    {
+        "id":2,
+        "number":"002",
+        "description": "",
+        "equipmentCode":"E002",
+        "equipmentOrganization": "ESS",
+        "departmentCode": "*",
+        "typeCode": "",
+        "statusCode": "UFIN"
+    }
+],
+    "equipment": [
+      { "id": 1, "code": "E001", "name": "Equipment 1", "parentlocation": "Location 1" },
+      { "id": 2, "code": "E002", "name": "Equipment 2", "parentlocation": "Location 2" }
+    ],
+    "workOrderTypes": [
+      { "id": 1, "code": "Type1", "name": "Work Order Type 1" },
+      { "id": 2, "code": "Type2", "name": "Work Order Type 2" }
+    ],
+    "comments": [
+        {
+            "entityCode": "EVNT",
+            "entityKeyCode": "001",
+            "text": "",
+            "user": ""
+
+        }
+    ],
+    "parts": [
+        {
+          "id": 1,
+          "code": "PART001",
+          "name": "Part 1",
+          "description": "Description of Part 1",
+          "tracked":"true"
+        },
+        {
+          "id": 2,
+          "code": "PART002",
+          "name": "Part 2",
+          "description": "Description of Part 2",
+          "tracked":"false"
+        }
+   
+      ],
+      "bins": [
+        {
+          "id": 1,
+          "partCode": "PART001",
+          "store": "Store1",
+          "binNumber": "BIN001"
+        },
+        {
+          "id": 2,
+          "partCode": "PART001",
+          "store": "Store2",
+          "binNumber": "BIN002"
+        }
+       
+      ],
+      "assets": [
+        {
+          "id": 1,
+          "partCode": "PART001",
+          "store": "Store1",
+          "binNumber": "BIN001",
+          "assetName": "Asset1"
+        },
+        {
+          "id": 2,
+          "partCode": "PART001",
+          "store": "Store1",
+          "binNumber": "BIN002",
+          "assetName": "Asset2"
+        }],
+        "partUsages":[],
+        "picktickets":[
+          {"pickNumber":"PickTicket001","partCode":"PART001"}
+        ]
+  }
