@@ -5,10 +5,9 @@ import Warehouse from "./warehouse/Warehouse";
 import Kiosk from "./kiosk/Kiosk";
 import Issue from "./kiosk/Issue";
 import Return from "./kiosk/Return";
-import RapidRequest from "./rapidRequest/RapidRequest";
-import SearchHeader from "./ui/pages/search/SearchHeader";
-import Search from "./ui/pages/search/Search";
 import RapidRequestHome from "./rapidRequest/RapidRequestHome";
+import AcceleratorReviews from "./acceleratorReviews/AcceleratorReviews";
+import Review from "./acceleratorReviews/Review";
 
 export default function App() {
   return (
@@ -20,6 +19,8 @@ export default function App() {
         <Route path="/issue" component={Issue} />
         <Route path="/return" component={Return} />
         <Route path="/rapidrequest" component={RapidRequestHome} />
+        <Route exact path="/acceleratorreview" component={AcceleratorReviews} />
+        <Route path="/acceleratorreview/:review" component={Review} />
       </Switch>
     </Router>
   );
