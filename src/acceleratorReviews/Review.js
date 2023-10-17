@@ -54,7 +54,8 @@ const useStyles = makeStyles((theme) => ({
     width: "25%",
   },
   btn: {
-    textAlign: "left",
+    display: "flex",
+    justifyContent: "space-between",
     marginBottom: "15px",
   },
   searchicon: {
@@ -106,6 +107,11 @@ function Review(props) {
     <div className={classes.main}>
       <h2>Review page for {review}</h2>
       <div className={classes.btn}>
+        <Link to="/acceleratorreview">
+          <Button color="primary" variant="contained">
+            Back
+          </Button>
+        </Link>
         <Link to="/">
           <Button color="primary" variant="contained">
             Home

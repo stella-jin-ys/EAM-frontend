@@ -9,10 +9,10 @@ import {
   ButtonGroup,
   Button,
   ButtonBase,
-  Link,
   Input,
 } from "@material-ui/core";
-import { Link as RouterLink } from "react-router-dom";
+import { Link } from "react-router-dom";
+import Header from "../homepage/Header";
 
 const reviewLists = [
   {
@@ -45,10 +45,6 @@ const reviewLists = [
 ];
 
 const useStyles = makeStyles((theme) => ({
-  page: {
-    height: "100%",
-    overflow: "auto",
-  },
   root: {
     display: "flex",
     flexDirection: "column",
@@ -64,9 +60,14 @@ const useStyles = makeStyles((theme) => ({
   },
   btngroup: {
     height: "100%",
+    width: "100%",
     backgroundColor: "white",
     color: "black",
     opacity: "0.7",
+  },
+  homeBtn: {
+    width: "80%",
+    textAlign: "right",
   },
   moreBtn: {
     marginTop: "20px",
@@ -102,9 +103,17 @@ function AcceleratorReviews(props) {
     setShowAll(true);
   };
   return (
-    <div className={classes.page}>
+    <div>
+      <Header />
       <div className={classes.root}>
         <h2>Accelerator Reviews</h2>
+        <div className={classes.homeBtn}>
+          <Link to="/">
+            <Button variant="contained" color="primary">
+              Home
+            </Button>
+          </Link>
+        </div>
 
         {reviews
           .slice()
@@ -112,7 +121,6 @@ function AcceleratorReviews(props) {
           .map((review, i) =>
             (!showAll && i < 3) || showAll ? (
               <Link
-                component={RouterLink}
                 className={classes.link}
                 key={i}
                 to={`/acceleratorreview/${encodeURIComponent(review.title)}`}

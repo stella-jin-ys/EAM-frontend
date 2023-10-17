@@ -14,6 +14,7 @@ import {
 import Issue from "../kiosk/Issue";
 import Return from "../kiosk/Return";
 import SearchProducts from "./SearchProducts";
+import Header from "../homepage/Header";
 
 const images = [
   {
@@ -177,61 +178,67 @@ function Kiosk() {
     }
   };
   return (
-    <div className={classes.root}>
-      <FormControl className={classes.formControl}>
-        <Typography component="div">Select a Store *</Typography>
-        <Select
-          onChange={handleStoreInput}
-          value={storeInput}
-          className={classes.select}
-        >
-          {stores.map((store, i) => (
-            <MenuItem key={i} value={store}>
-              {store}
-            </MenuItem>
-          ))}
-        </Select>
-        <Typography component="div">Select Transaction Type *</Typography>
-        <div className={classes.root}>
-          {currentPage
-            ? renderPage()
-            : images.map((image, i) => (
-                <ButtonBase
-                  focusRipple
-                  key={image.title}
-                  className={classes.image}
-                  style={{
-                    width: image.width,
-                  }}
-                  component={Link}
-                  to={{
-                    state: stateToPass,
-                    pathname: `/${image.title.toLowerCase().replace(" ", "")}`,
-                  }}
-                  onClick={() => handleClick(image.title)}
-                >
-                  <span
-                    className={classes.imageSrc}
+    <div>
+      <Header />
+
+      <div className={classes.root}>
+        <FormControl className={classes.formControl}>
+          <Typography component="div">Select a Store *</Typography>
+          <Select
+            onChange={handleStoreInput}
+            value={storeInput}
+            className={classes.select}
+          >
+            {stores.map((store, i) => (
+              <MenuItem key={i} value={store}>
+                {store}
+              </MenuItem>
+            ))}
+          </Select>
+          <Typography component="div">Select Transaction Type *</Typography>
+          <div className={classes.root}>
+            {currentPage
+              ? renderPage()
+              : images.map((image, i) => (
+                  <ButtonBase
+                    focusRipple
+                    key={image.title}
+                    className={classes.image}
                     style={{
-                      backgroundImage: `url(${image.url})`,
+                      width: image.width,
                     }}
-                  />
-                  <span className={classes.imageBackdrop} />
-                  <span className={classes.imageButton}>
-                    <Typography
-                      component="span"
-                      variant="subtitle1"
-                      color="inherit"
-                      className={classes.imageTitle}
-                    >
-                      {image.title}
-                      <span className={classes.imageMarked} />
-                    </Typography>
-                  </span>
-                </ButtonBase>
-              ))}
-        </div>
-      </FormControl>
+                    component={Link}
+                    to={{
+                      state: stateToPass,
+                      pathname: `/${image.title
+                        .toLowerCase()
+                        .replace(" ", "")}`,
+                    }}
+                    onClick={() => handleClick(image.title)}
+                  >
+                    <span
+                      className={classes.imageSrc}
+                      style={{
+                        backgroundImage: `url(${image.url})`,
+                      }}
+                    />
+                    <span className={classes.imageBackdrop} />
+                    <span className={classes.imageButton}>
+                      <Typography
+                        component="span"
+                        variant="subtitle1"
+                        color="inherit"
+                        className={classes.imageTitle}
+                      >
+                        {image.title}
+                        <span className={classes.imageMarked} />
+                      </Typography>
+                    </span>
+                  </ButtonBase>
+                ))}
+          </div>
+        </FormControl>
+      </div>
     </div>
   );
 }

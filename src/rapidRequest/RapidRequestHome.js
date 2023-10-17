@@ -5,6 +5,7 @@ import EAMCheckbox from "eam-components/dist/ui/components/muiinputs/EAMCheckbox
 import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
 import RapidContainer from "../../src/rapidRequest/RapidContainer";
 import RapidRequest from "./RapidRequest";
+import Header from "../homepage/Header";
 
 const SEARCH_TYPES = {
   PART: {
@@ -78,103 +79,88 @@ export default class SearchHeader extends React.Component {
       process.env.REACT_APP_PUBLIC_URL === "/eammobile";
 
     return (
-      <div
-        style={{
-          width: "100%",
-          height: "80vh",
-          textAlign: "center",
-          alignItems: "center",
-          padding: "0 10%",
-        }}
-      >
+      <div>
+        <Header />
         <div
-          id="searchBox"
-          className={
-            this.props.searchBoxUp
-              ? "searchBox searchBoxSearch"
-              : "searchBox searchBoxHome"
-          }
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            height: "100vh",
+          }}
         >
-          <div id="searchBoxLabel" className="searchBoxLabelHome">
-            <img
-              src="images/eamlight_logo.png"
-              alt="EAM Mobile Logo"
-              style={{ paddingLeft: 20 }}
-            />
-            <div style={{ width: 10 }}></div>
-            <div
-              id="searchBoxLabelGreeting"
-              className={
-                this.props.searchBoxUp
-                  ? "searchBoxLabelGreetingSearch"
-                  : "searchBoxLabelGreetingHome"
-              }
-            >
-              <span
-                className="FontLatoBlack Fleft Fs30 DispBlock"
-                style={{ color: "#02a2f2" }}
+          <div>
+            <div id="searchBox">
+              <div>
+                <img
+                  src="images/eamlight_logo.png"
+                  alt="EAM Mobile Logo"
+                  style={{ paddingLeft: 20 }}
+                />
+                <div style={{ width: 10 }}></div>
+                <div>
+                  <span style={{ color: "#02a2f2" }}>
+                    Welcome to EAM Mobile
+                  </span>
+                </div>
+              </div>
+              <div>
+                <EAMBarcodeInput
+                  onChange={(val) =>
+                    this.props.fetchDataHandler(val, entityTypes)
+                  }
+                  top={3}
+                  right={-7}
+                >
+                  <input
+                    onChange={this.handleSearchInput.bind(this)}
+                    id="searchInputText"
+                    onKeyDown={this.props.onKeyDown}
+                    value={this.props.keyword}
+                    style={{ textTransform: "uppercase" }}
+                    ref={(input) => {
+                      this.searchInput = input;
+                    }}
+                  />
+                </EAMBarcodeInput>
+                <FontIcon style={searchIconStyle} className="fa fa-search" />
+                {showTypes && (
+                  <div
+                    style={{
+                      height: "30px",
+                      display: "flex",
+                      direction: "row",
+                      whiteSpace: "nowrap",
+                    }}
+                  >
+                    {Object.values(SEARCH_TYPES).map(
+                      this.renderTypeCheckbox.bind(this)
+                    )}
+                  </div>
+                )}
+                <label id="searchPlaceHolder">
+                  {!this.props.keyword && this.props.logistics_Placeholder}
+                </label>
+              </div>
+
+              <div
+                onClick={this.handleOpenModal}
+                style={{
+                  cursor: "pointer",
+                  display: "block",
+                  textAlign: "center",
+                }}
               >
-                Welcome to EAM Mobile
-              </span>
+                <AddCircleOutlineIcon fontSize="large" color="primary" />
+                <div>Rapid Request</div>
+              </div>
+
+              <RapidRequest
+                open={showModal}
+                handleClose={this.handleCloseModal}
+              />
             </div>
           </div>
-          <div
-            id="searchBoxInput"
-            className={
-              this.props.searchBoxUp
-                ? "searchBoxInputSearch"
-                : "searchBoxInputHome"
-            }
-          >
-            <EAMBarcodeInput
-              onChange={(val) => this.props.fetchDataHandler(val, entityTypes)}
-              top={3}
-              right={-7}
-            >
-              <input
-                onChange={this.handleSearchInput.bind(this)}
-                id="searchInputText"
-                onKeyDown={this.props.onKeyDown}
-                value={this.props.keyword}
-                style={{ textTransform: "uppercase" }}
-                ref={(input) => {
-                  this.searchInput = input;
-                }}
-              />
-            </EAMBarcodeInput>
-            <FontIcon style={searchIconStyle} className="fa fa-search" />
-            {showTypes && (
-              <div
-                style={{
-                  height: "30px",
-                  display: "flex",
-                  direction: "row",
-                  whiteSpace: "nowrap",
-                }}
-              >
-                {Object.values(SEARCH_TYPES).map(
-                  this.renderTypeCheckbox.bind(this)
-                )}
-              </div>
-            )}
-            <label id="searchPlaceHolder">
-              {!this.props.keyword && this.props.logistics_Placeholder}
-            </label>
-          </div>
-
-          <div
-            onClick={this.handleOpenModal}
-            style={{
-              cursor: "pointer",
-              display: "block",
-              textAlign: "center",
-            }}
-          >
-            <AddCircleOutlineIcon fontSize="large" color="primary" />
-            <div>Rapid Request</div>
-          </div>
-
-          <RapidRequest open={showModal} handleClose={this.handleCloseModal} />
         </div>
       </div>
     );
