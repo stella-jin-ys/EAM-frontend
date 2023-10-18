@@ -8,6 +8,7 @@ import Return from "./kiosk/Return";
 import RapidRequestHome from "./rapidRequest/RapidRequestHome";
 import AcceleratorReviews from "./acceleratorReviews/AcceleratorReviews";
 import Review from "./acceleratorReviews/Review";
+import PartTable from "./warehouse/PartTable";
 
 export default function App() {
   return (
@@ -15,6 +16,7 @@ export default function App() {
       <Switch>
         <Route exact path="/" component={Homepage} />
         <Route path="/warehouse" component={Warehouse} />
+        <Route path="/warehouse/pickticket/:number" component={PartTable} />
         <Route path="/kiosk" component={Kiosk} />
         <Route path="/issue" component={Issue} />
         <Route path="/return" component={Return} />
