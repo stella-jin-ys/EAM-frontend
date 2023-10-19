@@ -15,7 +15,8 @@ export default function App() {
     <Router>
       <Switch>
         <Route exact path="/" component={Homepage} />
-        <Route path="/warehouse" component={Warehouse} />
+        <Route exact path="/warehouse" component={Warehouse} />
+
         <Route path="/warehouse/pickticket/:number" component={PartTable} />
         <Route path="/kiosk" component={Kiosk} />
         <Route path="/issue" component={Issue} />

@@ -11,25 +11,82 @@ import {
   AccordionDetails,
   Button,
   Typography,
+  Paper,
 } from "@material-ui/core";
 import BinData from "./BinData";
+import { useParams } from "react-router-dom";
+import Header from "../homepage/Header";
+import { makeStyles } from "@material-ui/core";
+
+const headers = [
+  "Part",
+  "Description",
+  "Selected Qty",
+  "Available Qty",
+  "Required Qty",
+];
+const pickticket = [
+  {
+    partCode: "10000",
+    partDesc: "part 10000",
+    issuedQty: 0,
+    storeQty: 100,
+    requiredQty: 5,
+    store: "store1",
+  },
+  {
+    partCode: "10001",
+    partDesc: "part 10001",
+    issuedQty: 0,
+    storeQty: 200,
+    requiredQty: 6,
+    store: "store1",
+  },
+  {
+    partCode: "10002",
+    partDesc: "part 10002",
+    issuedQty: 0,
+    storeQty: 300,
+    requiredQty: 7,
+    store: "store1",
+  },
+  {
+    partCode: "10003",
+    partDesc: "part 10003",
+    issuedQty: 0,
+    storeQty: 400,
+    requiredQty: 8,
+    store: "store1",
+  },
+  {
+    partCode: "10004",
+    partDesc: "part 10004",
+    issuedQty: 0,
+    storeQty: 500,
+    requiredQty: 9,
+    store: "store1",
+  },
+];
+
+const useStyles = makeStyles((theme) => ({
+  main: {
+    margin: "auto",
+  },
+  details: {
+    width: "80%",
+    margin: "20px auto",
+  },
+}));
 
 export default function PartTable(props) {
-  const headers = [
-    "Part",
-    "Description",
-    "Selected Qty",
-    "Available Qty",
-    "Required Qty",
-  ];
+  const classes = useStyles();
+  const { number } = useParams();
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState([]);
   const [barcode, setBarcode] = useState("");
   const [state, setState] = useState(data);
   const [selectedValues, setSelectedValues] = useState([]);
-  const [successCount, setSuccessCount] = useState(0);
-  const [progress, setProgress] = useState(0);
-
+  console.log({ number });
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
@@ -61,13 +118,6 @@ export default function PartTable(props) {
     fetchData();
   }, []);
 
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setProgress((newProgress) => (newProgress >= 100 ? 0 : newProgress + 10));
-    }, 500);
-    return clearInterval(timer);
-  }, []);
-
   const selectedQtyChange = (e, c) => {
     setState((prev) => {
       return {
@@ -79,9 +129,10 @@ export default function PartTable(props) {
   };
 
   return (
-    <div width="100%">
-      <Typography>Pickticket number {props.item}</Typography>
-      <div>
+    <div className={classes.main}>
+      <Header />
+      <Paper className={classes.details}>
+        <Typography>Pickticket number {number}</Typography>
         <ul
           style={{
             display: "flex",
@@ -96,7 +147,7 @@ export default function PartTable(props) {
             </li>
           ))}
         </ul>
-        {data.map((partInfo, i) => (
+        {pickticket.map((partInfo, i) => (
           <Accordion>
             <AccordionSummary
               expandIcon={<ExpandMoreIcon />}
@@ -154,7 +205,7 @@ export default function PartTable(props) {
         >
           Done
         </Button>
-      </div>
+      </Paper>
     </div>
   );
 }

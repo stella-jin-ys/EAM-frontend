@@ -26,7 +26,6 @@ import { Account, AccountMultiple, Settings } from "mdi-material-ui";
 import ScreenChange from "./ScreenChange";
 import { AssetIcon } from "eam-components/dist/ui/components/icons";
 import { PositionIcon } from "eam-components/dist/ui/components/icons";
-import { SystemIcon } from "eam-components/dist/ui/components/icons";
 
 class EamlightMenu extends Component {
   constructor(props) {

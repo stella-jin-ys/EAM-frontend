@@ -2,14 +2,11 @@ import React, { useState } from "react";
 import PartTable from "./PartTable";
 import {
   Paper,
+  Box,
   Select,
   MenuItem,
-  Input,
   Typography,
-  Table,
-  TableBody,
-  TableRow,
-  TableCell,
+  Button,
 } from "@material-ui/core";
 import Header from "../homepage/Header";
 import { makeStyles } from "@material-ui/core/styles";
@@ -24,14 +21,22 @@ const useStyles = makeStyles((theme) => ({
     width: "80%",
     display: "flex",
     flexDirection: "column",
-    alignItems: "center",
+    alignItems: "left",
     justifyContent: "center",
     margin: "20px auto",
     padding: "20px",
+    border: "1px solid grey",
   },
   select: {
     width: "60%",
     margin: "10px",
+  },
+  link: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "left",
+    gap: "5px",
+    textDecoration: "none",
   },
 }));
 
@@ -53,7 +58,7 @@ function Warehouse(props) {
   return (
     <div>
       <Header />
-      <Paper className={classes.paper}>
+      <Box className={classes.paper}>
         <Typography>Issue/ Return pickticket</Typography>
         <Select value={type} className={classes.select} onChange={handleType}>
           <MenuItem>Issue pickticket</MenuItem>
@@ -79,18 +84,20 @@ function Warehouse(props) {
           <MenuItem>Without pickticket</MenuItem>
         </Select>
         <div>
+          <Typography>Pick Tickets</Typography>
           {pickticketList.map((item) => (
             <Link
               to={{
                 pathname: `/warehouse/pickticket/${encodeURIComponent(item)}`,
                 item: item,
+                store: selectedStore,
               }}
             >
-              {item}
+              <Button className={classes.link}>{item}</Button>
             </Link>
           ))}
         </div>
-      </Paper>
+      </Box>
     </div>
   );
 }
