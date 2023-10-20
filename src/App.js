@@ -28,3 +28,8 @@ export default function App() {
     </Router>
   );
 }
+
+/* 
+  Set-ExecutionPolicy RemoteSigned -Scope Process
+  json-server --watch db.json --port 3001
+  Set-ExecutionPolicy -Scope Process -ExecutionPolicy Undefined */

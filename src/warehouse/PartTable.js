@@ -18,56 +18,6 @@ import { useParams } from "react-router-dom";
 import Header from "../homepage/Header";
 import { makeStyles } from "@material-ui/core";
 
-const headers = [
-  "Part",
-  "Description",
-  "Selected Qty",
-  "Available Qty",
-  "Required Qty",
-];
-const pickticket = [
-  {
-    partCode: "10000",
-    partDesc: "part 10000",
-    issuedQty: 0,
-    storeQty: 100,
-    requiredQty: 5,
-    store: "store1",
-  },
-  {
-    partCode: "10001",
-    partDesc: "part 10001",
-    issuedQty: 0,
-    storeQty: 200,
-    requiredQty: 6,
-    store: "store1",
-  },
-  {
-    partCode: "10002",
-    partDesc: "part 10002",
-    issuedQty: 0,
-    storeQty: 300,
-    requiredQty: 7,
-    store: "store1",
-  },
-  {
-    partCode: "10003",
-    partDesc: "part 10003",
-    issuedQty: 0,
-    storeQty: 400,
-    requiredQty: 8,
-    store: "store1",
-  },
-  {
-    partCode: "10004",
-    partDesc: "part 10004",
-    issuedQty: 0,
-    storeQty: 500,
-    requiredQty: 9,
-    store: "store1",
-  },
-];
-
 const useStyles = makeStyles((theme) => ({
   main: {
     margin: "auto",
@@ -75,6 +25,25 @@ const useStyles = makeStyles((theme) => ({
   details: {
     width: "80%",
     margin: "20px auto",
+  },
+  ui: {
+    display: "flex",
+    justifyContent: "space-around",
+    listStyle: "none",
+    alignItems: "flex-start",
+  },
+  AccordionDetails: {
+    maxWidth: "800px",
+    display: "flex",
+    flexWrap: "wrap",
+  },
+  tablerow: {
+    display: "flex",
+    flexDirection: "column",
+  },
+  btn: {
+    float: "right",
+    marginTop: "20px",
   },
 }));
 
@@ -86,16 +55,34 @@ export default function PartTable(props) {
   const [barcode, setBarcode] = useState("");
   const [state, setState] = useState(data);
   const [selectedValues, setSelectedValues] = useState([]);
-  console.log({ number });
+  const [screen, setScreen] = useState(window.innerWidth);
+  window.addEventListener("resize", () => {
+    setScreen(window.innerWidth);
+  });
+
+  const headers = [
+    "Part",
+    "Description",
+    "Selected Qty",
+    "Available Qty",
+    "Required Qty",
+  ];
+
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
-      if (props.pickNumber) {
-        fetch(`http://localhost:3001/picktickets/${props.pickNumber}`)
+      if ({ number }) {
+        fetch(`http://localhost:3001/pickticket`)
           .then((res) => {
-            setData(res.body.data);
+            if (res.status === 200) {
+              return res.json();
+            }
+          })
+          .then((data) => {
+            console.log(data);
+            setData(data);
             setSelectedValues(
-              res.body.data.map((item, index) => {
+              data.map((item, index) => {
                 if (item.trackbyAsset == "true") {
                   return { binId: "", assetId: "" };
                 } else {
@@ -109,9 +96,9 @@ export default function PartTable(props) {
             );
             setLoading(false);
           })
+
           .catch((error) => {
-            props.handleError(error);
-            setLoading(false);
+            console.log(error);
           });
       }
     };
@@ -128,84 +115,151 @@ export default function PartTable(props) {
     });
   };
 
-  return (
-    <div className={classes.main}>
-      <Header />
-      <Paper className={classes.details}>
-        <Typography>Pickticket number {number}</Typography>
-        <ul
-          style={{
-            display: "flex",
-            justifyContent: "space-around",
-            listStyle: "none",
-            alignItems: "flex-start",
-          }}
-        >
-          {headers.map((header, i) => (
-            <li key={i} align="left" width="10px" fontWeight="bold">
-              {header}
-            </li>
-          ))}
-        </ul>
-        {pickticket.map((partInfo, i) => (
-          <Accordion>
-            <AccordionSummary
-              expandIcon={<ExpandMoreIcon />}
-              style={{ backgroundColor: partInfo.color }}
-              key={i}
+  if (loading) {
+    return <div>Loading the part information...</div>;
+  } else {
+    if (screen > 400) {
+      return (
+        <div className={classes.main}>
+          <Header />
+          <Paper className={classes.details}>
+            <h3>Pickticket number: {number}</h3>
+
+            <ul className={classes.ui}>
+              {headers.map((header, i) => (
+                <li key={i} align="left" width="10px" fontWeight="bold">
+                  {header}
+                </li>
+              ))}
+            </ul>
+            {data.map((partInfo, i) => (
+              <Accordion>
+                <AccordionSummary
+                  expandIcon={<ExpandMoreIcon />}
+                  style={{ backgroundColor: partInfo.color }}
+                  key={i}
+                >
+                  <Table>
+                    <TableBody>
+                      <TableRow>
+                        <TableCell key={i} align="left" width="10px">
+                          {partInfo.partCode}
+                        </TableCell>
+                        <TableCell align="left" width="10px">
+                          {partInfo.partDesc}
+                        </TableCell>
+                        <TableCell align="left" width="10px">
+                          {partInfo.issuedQty}
+                        </TableCell>
+                        <TableCell align="left" width="10px">
+                          {partInfo.storeQty}
+                        </TableCell>
+                        <TableCell align="left" width="10px">
+                          {partInfo.requiredQty}
+                        </TableCell>
+                      </TableRow>
+                    </TableBody>
+                  </Table>
+                </AccordionSummary>
+                <AccordionDetails className={classes.AccordionDetails}>
+                  <BinData
+                    parentIndex={i}
+                    partInfo={partInfo}
+                    partCode={partInfo.partCode}
+                    store={props.store}
+                    selectedQtyChange={selectedQtyChange}
+                    barcode={barcode}
+                    selectedValues={selectedValues}
+                    setSelectedValues={setSelectedValues}
+                  />
+                </AccordionDetails>
+              </Accordion>
+            ))}
+
+            <Button
+              variant="contained"
+              size="small"
+              color="primary"
+              onClick={props.handleFinalSave}
+              className={classes.btn}
             >
-              <Table>
-                <TableBody>
-                  <TableRow>
-                    <TableCell key={i} align="left" width="10px">
-                      {partInfo.partCode}
-                    </TableCell>
-                    <TableCell align="left" width="10px">
-                      {partInfo.partDesc}
-                    </TableCell>
-                    <TableCell align="left" width="10px">
-                      {partInfo.issuedQty}
-                    </TableCell>
-                    <TableCell align="left" width="10px">
-                      {partInfo.storeQty}
-                    </TableCell>
-                    <TableCell align="left" width="10px">
-                      {partInfo.requiredQty}
-                    </TableCell>
-                  </TableRow>
-                </TableBody>
-              </Table>
-            </AccordionSummary>
-            <AccordionDetails
-              style={{
-                maxWidth: "800px",
-                display: "flex",
-                flexWrap: "wrap",
-              }}
+              Done
+            </Button>
+          </Paper>
+        </div>
+      );
+    } else {
+      return (
+        <div className={classes.main}>
+          <Header />
+          <Paper className={classes.details}>
+            <h3>Pickticket number: {number}</h3>
+            {data.map((partInfo, i) => (
+              <Accordion key={i} style={{ overflow: "hidden" }}>
+                <AccordionSummary
+                  expandIcon={<ExpandMoreIcon />}
+                  style={{
+                    backgroundColor:
+                      parseInt(partInfo.issuedQty) >=
+                      parseInt(partInfo.requiredQty)
+                        ? "#DDF7E7"
+                        : partInfo.color,
+                  }}
+                  key={i}
+                >
+                  <Table>
+                    <TableBody>
+                      <TableRow
+                        style={{
+                          display: "flex",
+                          flexDirection: "column",
+                        }}
+                      >
+                        <TableCell>Part: {partInfo.partCode}</TableCell>
+                        <TableCell>Description: {partInfo.partDesc}</TableCell>
+                        <TableCell>
+                          Available Quantity: {partInfo.storeQty}
+                        </TableCell>
+                        <TableCell>
+                          Issued Quantity: {partInfo.issuedQty}
+                        </TableCell>
+                        <TableCell>
+                          Required Quantity: {partInfo.requiredQty}
+                        </TableCell>
+                        <TableCell>
+                          Selected Quantity: {partInfo.selectedQty}
+                        </TableCell>
+                      </TableRow>
+                    </TableBody>
+                  </Table>
+                </AccordionSummary>
+                <AccordionDetails className="MuiAccordionDetails-root">
+                  <BinData
+                    parentIndex={i}
+                    partInfo={partInfo}
+                    partCode={partInfo.partCode}
+                    store={props.store}
+                    selectedQtyChange={selectedQtyChange}
+                    barcode={barcode}
+                    selectedValues={selectedValues}
+                    setSelectedValues={setSelectedValues}
+                  />
+                </AccordionDetails>
+              </Accordion>
+            ))}
+
+            <Button
+              variant="contained"
+              size="small"
+              color="primary"
+              onClick={props.handleFinalSave}
+              className={classes.btn}
             >
-              <BinData
-                parentIndex={i}
-                partInfo={partInfo}
-                partCode={partInfo.partCode}
-                store={props.pickticket.store}
-                selectedQtyChange={selectedQtyChange}
-                barcode={barcode}
-                selectedValues={selectedValues}
-                setSelectedValues={setSelectedValues}
-              />
-            </AccordionDetails>
-          </Accordion>
-        ))}
-        <Button
-          variant="contained"
-          size="small"
-          color="primary"
-          style={{ float: "right", marginTop: "20px" }}
-          onClick={props.handleFinalSave}
-        >
-          Done
-        </Button>
-      </Paper>
-    </div>
-  );
+              Done
+            </Button>
+          </Paper>
+        </div>
+      );
+    }
+  }
 }

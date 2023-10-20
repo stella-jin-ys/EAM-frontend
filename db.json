@@ -89,7 +89,40 @@
           "assetName": "Asset2"
         }],
       
-        "picktickets":[
-          {"pickNumber":"PickTicket001","partCode":"PART001"}
+        "pickticket":[
+          {"pickNumber":"PickTicket001",
+          "partCode":"PART0001",
+          "partDesc": "part PART0001",
+          "issuedQty": "0",
+          "storeQty": "100",
+          "requiredQty": "5",
+          "store": "store1",
+        "trackedByAsset":"true"},
+          {"pickNumber":"PickTicket001",
+          "partCode":"PART0002",
+          "partDesc": "part PART0002",
+          "issuedQty": "0",
+          "storeQty": "200",
+          "requiredQty": "5",
+          "store": "store1",
+        "trackedByAsset":"false"},
+          {"pickNumber":"PickTicket001",
+          "partCode":"PART0003",
+          "partDesc": "part PART0003",
+          "issuedQty": "0",
+          "storeQty": "300",
+          "requiredQty": "5",
+          "store": "store1",
+        "trackedByAsset":"true"},
+          {"pickNumber":"PickTicket0001",
+          "partCode":"PART0004",
+          "partDesc": "part PART0004",
+          "issuedQty": "0",
+          "storeQty": "100",
+          "requiredQty": "5",
+          "store": "store1",
+        "trackedByAsset":"false"}
         ]
   }
+
+ 

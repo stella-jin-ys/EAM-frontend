@@ -107,13 +107,13 @@ function PartQuantity({
         (acc, curr) => acc + parseInt(curr.partQtyInput),
         0
       ) || 0;
-    selectedValues[parentIndex].binPartQty.map((item, i) => {
+    /*   selectedValues[parentIndex].binPartQty.map((item, i) => {
       selectedQtyChange(item.partQtyInput);
       partInfo.issuedQty = sum ? sum : " ";
       partInfo.issuedQty.toString() == partInfo.requiredQty
         ? (partInfo.color = color.completed)
         : (partInfo.color = color.incompleted);
-    });
+    }); */
   }, [selectedValues[parentIndex]?.binPartQty]);
 
   /*  let inputData= selectedValues.map((item, i) => {

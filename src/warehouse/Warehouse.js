@@ -13,8 +13,12 @@ import { makeStyles } from "@material-ui/core/styles";
 import { Link } from "react-router-dom";
 
 const stores = ["store1", "store2", "store3", "store4"];
-const picktickets = ["with pickticket", "without pickticket"];
-const pickticketList = ["1000", "1001", "1002", "1003", "1004"];
+const pickticketList = [
+  "PickTicket001",
+  "PickTicket002",
+  "PickTicket003",
+  "PickTicket004",
+];
 
 const useStyles = makeStyles((theme) => ({
   paper: {
