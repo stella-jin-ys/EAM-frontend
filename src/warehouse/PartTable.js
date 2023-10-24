@@ -17,6 +17,7 @@ import BinData from "./BinData";
 import { useParams } from "react-router-dom";
 import Header from "../homepage/Header";
 import { makeStyles } from "@material-ui/core";
+import { Link } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   main: {
@@ -42,8 +43,9 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: "column",
   },
   btn: {
-    float: "right",
-    marginTop: "20px",
+    display: "flex",
+    justifyContent: "space-between",
+    margin: "20px",
   },
 }));
 
@@ -114,47 +116,58 @@ export default function PartTable(props) {
       };
     });
   };
+  const handleDone = () => {};
 
   if (loading) {
     return <div>Loading the part information...</div>;
   } else {
-    if (screen > 400) {
+    if (screen > 540) {
       return (
         <div className={classes.main}>
           <Header />
           <Paper className={classes.details}>
             <h3>Pickticket number: {number}</h3>
+            <Table>
+              <TableBody>
+                <TableRow>
+                  {headers.map((header, i) => (
+                    <TableCell key={i} align="left">
+                      {header}
+                    </TableCell>
+                  ))}
+                </TableRow>
+              </TableBody>
+            </Table>
 
-            <ul className={classes.ui}>
-              {headers.map((header, i) => (
-                <li key={i} align="left" width="10px" fontWeight="bold">
-                  {header}
-                </li>
-              ))}
-            </ul>
             {data.map((partInfo, i) => (
               <Accordion>
                 <AccordionSummary
                   expandIcon={<ExpandMoreIcon />}
-                  style={{ backgroundColor: partInfo.color }}
+                  style={{
+                    backgroundColor:
+                      parseInt(partInfo.issuedQty) >=
+                      parseInt(partInfo.requiredQty)
+                        ? "#DDF7E7"
+                        : partInfo.color,
+                  }}
                   key={i}
                 >
                   <Table>
                     <TableBody>
-                      <TableRow>
-                        <TableCell key={i} align="left" width="10px">
+                      <TableRow key={i}>
+                        <TableCell align="left" width="10%">
                           {partInfo.partCode}
                         </TableCell>
-                        <TableCell align="left" width="10px">
+                        <TableCell align="left" width="25%">
                           {partInfo.partDesc}
                         </TableCell>
-                        <TableCell align="left" width="10px">
+                        <TableCell align="left" width="20%">
                           {partInfo.issuedQty}
                         </TableCell>
-                        <TableCell align="left" width="10px">
+                        <TableCell align="left" width="20%">
                           {partInfo.storeQty}
                         </TableCell>
-                        <TableCell align="left" width="10px">
+                        <TableCell align="left" width="20%">
                           {partInfo.requiredQty}
                         </TableCell>
                       </TableRow>
@@ -175,16 +188,22 @@ export default function PartTable(props) {
                 </AccordionDetails>
               </Accordion>
             ))}
+            <div className={classes.btn}>
+              <Link to="/warehouse">
+                <Button variant="contained" size="small" color="primary">
+                  Back
+                </Button>
+              </Link>
 
-            <Button
-              variant="contained"
-              size="small"
-              color="primary"
-              onClick={props.handleFinalSave}
-              className={classes.btn}
-            >
-              Done
-            </Button>
+              <Button
+                variant="contained"
+                size="small"
+                color="primary"
+                onClick={props.handleFinalSave}
+              >
+                Done
+              </Button>
+            </div>
           </Paper>
         </div>
       );
@@ -252,7 +271,7 @@ export default function PartTable(props) {
               variant="contained"
               size="small"
               color="primary"
-              onClick={props.handleFinalSave}
+              onClick={handleDone}
               className={classes.btn}
             >
               Done

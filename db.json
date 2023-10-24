@@ -63,13 +63,15 @@
           "id": 1,
           "partCode": "PART001",
           "store": "Store1",
-          "binNumber": "BIN001"
+          "binCode": "BIN001",
+          "binqty":"4"
         },
         {
           "id": 2,
           "partCode": "PART001",
           "store": "Store2",
-          "binNumber": "BIN002"
+          "binCode": "BIN002",
+          "binqty":"8"
         }
        
       ],
@@ -93,6 +95,7 @@
           {"pickNumber":"PickTicket001",
           "partCode":"PART0001",
           "partDesc": "part PART0001",
+          
           "issuedQty": "0",
           "storeQty": "100",
           "requiredQty": "5",
