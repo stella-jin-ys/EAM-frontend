@@ -19,15 +19,23 @@ function BinData({
 
   useEffect(() => {
     const fetchBins = async (part, store) => {
-      const res = fetch(`http://localhost:3001/bins/${bin}`).then((res) => {
-        setBins(res.body.data);
-      });
+      if (store) {
+        fetch(`http://localhost:3001/bins`)
+          .then((res) => {
+            if (res.status === 200) {
+              return res.json();
+            }
+          })
+          .then((data) => {
+            setBins(data);
+          });
+      }
+
       fetchBins(partCode, store);
     };
   }, []);
 
   const updateProperty = (event) => {
-    console.log(event);
     setBarcode(event);
   };
   // find selected index/row, and push to bins array for specific row

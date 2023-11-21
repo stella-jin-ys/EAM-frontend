@@ -27,12 +27,20 @@ function AssetData({
   };
 
   useEffect(() => {
-    const fetchAssets = async (part, store, bin) => {
-      const res = fetch(
-        `http://localhost:3001/assets/${(part, store, bin)}`
-      ).then((res) => setAssets(res.body.data));
+    const fetchAssets = async () => {
+      if (bin) {
+        fetch(`http://localhost:3001/assets}`)
+          .then((res) => {
+            if (res.status === 200) {
+              return res.json();
+            }
+          })
+          .then((data) => {
+            setAssets(data);
+          });
+      }
     };
-    fetchAssets(partCode, store, bin);
+    fetchAssets();
   }, [bin]);
   useEffect(() => {
     if (

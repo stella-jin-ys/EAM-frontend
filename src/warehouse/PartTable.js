@@ -43,9 +43,10 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: "column",
   },
   btn: {
+    width: "80%",
     display: "flex",
     justifyContent: "space-between",
-    margin: "20px",
+    margin: "20px auto",
   },
 }));
 
@@ -96,13 +97,12 @@ export default function PartTable(props) {
                 }
               })
             );
-            setLoading(false);
           })
-
           .catch((error) => {
             console.log(error);
           });
       }
+      setLoading(false);
     };
     fetchData();
   }, []);
@@ -188,23 +188,23 @@ export default function PartTable(props) {
                 </AccordionDetails>
               </Accordion>
             ))}
-            <div className={classes.btn}>
-              <Link to="/warehouse">
-                <Button variant="contained" size="small" color="primary">
-                  Back
-                </Button>
-              </Link>
-
-              <Button
-                variant="contained"
-                size="small"
-                color="primary"
-                onClick={props.handleFinalSave}
-              >
-                Done
-              </Button>
-            </div>
           </Paper>
+          <div className={classes.btn}>
+            <Link to="/warehouse">
+              <Button variant="contained" size="small" color="primary">
+                Back
+              </Button>
+            </Link>
+
+            <Button
+              variant="contained"
+              size="small"
+              color="primary"
+              onClick={props.handleFinalSave}
+            >
+              Done
+            </Button>
+          </div>
         </div>
       );
     } else {

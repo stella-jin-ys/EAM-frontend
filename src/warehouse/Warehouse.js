@@ -42,6 +42,10 @@ const useStyles = makeStyles((theme) => ({
     gap: "5px",
     textDecoration: "none",
   },
+  btn: {
+    float: "right",
+    marginRight: "8.5%",
+  },
 }));
 
 function Warehouse(props) {
@@ -102,8 +106,12 @@ function Warehouse(props) {
           ))}
         </div>
       </Box>
+      <Link to="/">
+        <Button variant="contained" color="primary" className={classes.btn}>
+          Home
+        </Button>
+      </Link>
     </div>
   );
 }
-
 export default Warehouse;
